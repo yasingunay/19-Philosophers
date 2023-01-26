@@ -6,11 +6,11 @@
 #    By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 14:24:50 by ygunay            #+#    #+#              #
-#    Updated: 2023/01/19 14:55:42 by ygunay           ###   ########.fr        #
+#    Updated: 2023/01/26 15:18:53 by ygunay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c
+SRCS = main.c utils.c
 
 OBJS = ${SRCS:.c=.o}
 
