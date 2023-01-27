@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/27 12:39:12 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/01/27 17:53:17 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void* routine(void *ptr)
 		pthread_mutex_lock(&mutex);
 		//printf("Philo says hello\n");
 		printf("Philo %d says hello\n", philo->id);
+		sleep(3);
 		pthread_mutex_unlock(&mutex);
 		
 		i++;
@@ -62,9 +63,11 @@ int main(int ac, char **av)
 		return 1;	
 	}
 	
+	pthread_mutex_init(&mutex,NULL);
+	
 	create_philos(&data);
 	
-	pthread_mutex_init(&mutex,NULL);
+	
 
 
 	int i =0;
