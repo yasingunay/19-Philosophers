@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/27 12:06:28 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/27 12:39:12 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ pthread_mutex_t mutex;
 
 
 
-void* routine()
+void* routine(void *ptr)
 {
-	t_data *data;
-
+	t_philo *philo =	(t_philo *)ptr;
 	int i = 0;
 	while(i < 1)
 	{
 		pthread_mutex_lock(&mutex);
-		printf("Philo %d says hello\n", data->philos[i].id);
+		//printf("Philo says hello\n");
+		printf("Philo %d says hello\n", philo->id);
 		pthread_mutex_unlock(&mutex);
 		
 		i++;
@@ -40,9 +40,9 @@ void create_philos(t_data *data)
 
 	while(i < data->nb_philo)
 	{
-		
-		pthread_create(&data->philos[i].thread, NULL, &routine, NULL);
 		data->philos[i].id = i+1;
+		pthread_create(&data->philos[i].thread, NULL, &routine, &data->philos[i]);
+		
 		//printf("%d\n",data->philos[i].id);
 		i++;
 	}
@@ -68,6 +68,7 @@ int main(int ac, char **av)
 
 
 	int i =0;
+	
 	while(i < data.nb_philo)
 	{
 		
