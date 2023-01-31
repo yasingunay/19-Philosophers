@@ -6,16 +6,11 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/30 11:11:52 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/31 10:34:48 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-
-pthread_mutex_t mutex;
-
-
 
 void* routine(void *ptr)
 {
@@ -24,11 +19,16 @@ void* routine(void *ptr)
 	while(i < 1)
 	{
 		pthread_mutex_lock(philo->left_fork);
+		printf("Philo %d has taken a fork\n", philo->id);
 		pthread_mutex_lock(philo->right_fork);
+		printf("Philo %d has taken a fork\n", philo->id);
 		printf("Philo %d is eating\n", philo->id);
-		sleep(1);
+		sleep(3);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
+		printf("Philo %d is sleeping\n", philo->id);
+		printf("Philo %d is thinking\n", philo->id);
+		
 		
 		i++;
 	}
@@ -93,38 +93,43 @@ int	free_threads(t_data *data)
 	return (0);
 }
 
+
+int init_args(t_data *data, int ac, char **av)
+{
+	data->nb_philo = ft_atoi(av[1]);
+	data->t_die = ft_atoi(av[2]);
+	data->t_eat = ft_atoi(av[3]);
+	data->t_sleep = ft_atoi(av[4]);
+		
+	if(ac == 6)
+		data->nb_meal = ft_atoi(av[5]);
+	if(data->nb_philo < 1 || data->t_die < 1 || data->t_eat < 1 || data->t_sleep < 1)
+		return(-1);
+	if(ac == 6 &&  data->nb_meal < 1)
+		return(-1);
+	return(0);
+}
+
+
 int main(int ac, char **av)
 {
 	t_data data;
-
-	if(ac == 2)
-		data.nb_philo = ft_atoi(av[1]);
-	else	
-	{
-		printf("argument number is not correct\n");
-		return 1;	
-	}
 	
+	if(ac < 5 || ac > 6)
+		return(ft_error("Argument number is not correct"));
+	if(init_args(&data, ac, av) == -1)
+		return(ft_error("At least one argument is invalid"));
 
 	create_table(&data);
 	
-
-	
-	
-
 	int i =0;
-	
 	while(i < data.nb_philo)
 	{
 		
 		pthread_join(data.philos[i].thread, NULL);
 		i++;
 	}
-	
-	
 	free_threads(&data);
-	
-	
 	return (0);
 }
 

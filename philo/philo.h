@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/30 10:54:38 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/31 10:06:12 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ typedef struct s_data
 	int nb_philo;
 	t_philo *philos;
 	t_mutex *forks;
+	int t_die;
+	int t_eat;
+	int t_sleep;
+	int nb_meal;
 } t_data;
 
 

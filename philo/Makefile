@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+         #
+#    By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 14:24:50 by ygunay            #+#    #+#              #
-#    Updated: 2023/01/27 12:23:21 by yasingunay       ###   ########.fr        #
+#    Updated: 2023/01/30 11:40:17 by ygunay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS = main.c utils.c
 
 OBJS = ${SRCS:.c=.o}
 
-CC 	 = gcc -fsanitize=address -g
+CC	= gcc -fsanitize=thread
 
 CFLAGS = -Wall -Wextra -Werror 
 
