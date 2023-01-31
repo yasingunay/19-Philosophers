@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/31 14:47:23 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/31 16:23:42 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data
 	int t_sleep;
 	int nb_meal;
 	long start_time;
+	int die;
 } t_data;
 
 

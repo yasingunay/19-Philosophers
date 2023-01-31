@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/31 15:08:30 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/31 16:43:52 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,43 @@ long	get_time(void)
 }
 
 
+void	ft_sleep(int time)
+{
+	int	start;
+
+	start = get_time();
+	while (get_time() - start < time)
+		usleep(250);
+}
+
+
 void* routine(void *ptr)
 {
 	t_philo *philo =	(t_philo *)ptr;
-	int i = 0;
+	
 
 	long now;
-	long now2;
 
 	now = get_time() - philo->datas->start_time;
 
-	while(i < 1)
+	while(philo->datas->die == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		printf("%ld Philo %d has taken a fork\n",now, philo->id);
 		pthread_mutex_lock(philo->right_fork);
 		printf("Philo %d has taken a fork\n", philo->id);
 		printf("Philo %d is eating\n", philo->id);
-		sleep(3);
-		now2= get_time();
-		if(now2 >= philo->last_eat +philo->datas->t_die)
-		{
-			printf("Philo %d is died\n", philo->id);
-			break;
-		}
+		philo->last_eat = get_time();
+		ft_sleep(philo->datas->t_eat);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		printf("Philo %d is sleeping\n", philo->id);
+		ft_sleep(philo->datas->t_sleep);
 		printf("Philo %d is thinking\n", philo->id);
 		
-		
-		i++;
+	
 	}
-	return 	NULL;
+	return NULL;
 }
 
 
@@ -133,10 +137,33 @@ int init_args(t_data *data, int ac, char **av)
 	if(ac == 6 &&  data->nb_meal < 1)
 		return(-1);
 	data->start_time = get_time();
+	data->die = 0;
 	return(0);
 }
 
+void	ft_check_death(t_data *data)
+{
+	int		i;
+	long	now;
 
+	while (data->die == 0)
+	{
+		
+		i = 0;
+		while (i < data->nb_philo)
+		{
+			now = get_time();
+			if (now >=data->philos[i].last_eat + data->t_die)
+			{
+				data->die = 1;
+				printf("died\n");
+				break ;
+			}
+			i++;
+		}
+
+	}
+}
 
 int main(int ac, char **av)
 {
@@ -148,6 +175,8 @@ int main(int ac, char **av)
 		return(ft_error("At least one argument is invalid"));
 
 	create_table(&data);
+	ft_check_death(&data);
+
 	
 	int i =0;
 	while(i < data.nb_philo)
@@ -156,6 +185,7 @@ int main(int ac, char **av)
 		pthread_join(data.philos[i].thread, NULL);
 		i++;
 	}
+	
 	free_threads(&data);
 	return (0);
 }
