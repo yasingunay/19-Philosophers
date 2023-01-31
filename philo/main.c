@@ -6,24 +6,46 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/31 10:34:48 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/31 15:08:30 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+long	get_time(void)
+{
+	struct timeval		tv;
+
+	gettimeofday(&tv, NULL);
+	
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+
 void* routine(void *ptr)
 {
 	t_philo *philo =	(t_philo *)ptr;
 	int i = 0;
+
+	long now;
+	long now2;
+
+	now = get_time() - philo->datas->start_time;
+
 	while(i < 1)
 	{
 		pthread_mutex_lock(philo->left_fork);
-		printf("Philo %d has taken a fork\n", philo->id);
+		printf("%ld Philo %d has taken a fork\n",now, philo->id);
 		pthread_mutex_lock(philo->right_fork);
 		printf("Philo %d has taken a fork\n", philo->id);
 		printf("Philo %d is eating\n", philo->id);
 		sleep(3);
+		now2= get_time();
+		if(now2 >= philo->last_eat +philo->datas->t_die)
+		{
+			printf("Philo %d is died\n", philo->id);
+			break;
+		}
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		printf("Philo %d is sleeping\n", philo->id);
@@ -67,11 +89,14 @@ int create_table(t_data *data)
 	if(!create_forks(data))
 		return(-1);	
 
+	data->start_time = get_time();
 	while(i < data->nb_philo)
 	{
 		data->philos[i].id = i+1;
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].right_fork = &data->forks[(i + data->nb_philo -1) % data->nb_philo];
+		data->philos[i].last_eat = data->start_time;
+		data->philos[i].datas = data;
 		
 		pthread_create(&data->philos[i].thread, NULL, &routine, &data->philos[i]);
 		
@@ -107,8 +132,10 @@ int init_args(t_data *data, int ac, char **av)
 		return(-1);
 	if(ac == 6 &&  data->nb_meal < 1)
 		return(-1);
+	data->start_time = get_time();
 	return(0);
 }
+
 
 
 int main(int ac, char **av)

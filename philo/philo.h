@@ -6,26 +6,31 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/31 10:06:12 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/01/31 14:47:23 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <sys/time.h>
+# include <stdatomic.h>
 
 typedef pthread_mutex_t	t_mutex;
+
 
 typedef struct s_philo
 {
 	int id;
+	atomic_long last_eat;
 	pthread_t thread;
 	t_mutex	*left_fork;
 	t_mutex	*right_fork;
-	
+	struct s_data *datas;
 	
 } t_philo;
+
 
 typedef struct s_data
 {
@@ -36,7 +41,12 @@ typedef struct s_data
 	int t_eat;
 	int t_sleep;
 	int nb_meal;
+	long start_time;
 } t_data;
+
+
+
+
 
 
 
