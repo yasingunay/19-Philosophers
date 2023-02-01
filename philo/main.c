@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/01 14:26:35 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/01 15:33:20 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,29 +197,55 @@ void *routine(void *arg)
 
 void init_philos(t_data *data)
 {
-	data->philos = malloc(2 * sizeof(t_philo));
+	data->philos = malloc(data->nb_philo * sizeof(t_philo));
 	if(!data->philos)
 		{
 			free(data->philos);
 			printf("malloc error\n");
 			exit(1);
 		}
-	data->philos[0].id =1;
-	data->philos[1].id =2;
+	int i = 0;
+	while (i < data->nb_philo)
+	{
+		data->philos[i].id = i+1;
+		i++;
+	
+	}
+	
 }
 
-int main() 
+void parse_args(t_data *data, int ac, char **av)
+{
+	if (ac ==2)
+		data->nb_philo = ft_atoi(av[1]);
+}
+
+int main(int ac, char **av) 
 {
   t_data data;
+  int i = 0;
+  parse_args(&data,ac,av);
 
   init_philos(&data);
   pthread_mutex_init(&lock, NULL);
 
-  pthread_create(&data.philos[0].thread, NULL, routine, &data.philos[0]);
-  pthread_create(&data.philos[1].thread, NULL, routine, &data.philos[1]);
+	while (i < data.nb_philo)
+	{
+		 pthread_create(&data.philos[i].thread, NULL, routine, &data.philos[i]);
+		i++;
+	
+	}
+ 
+  i = 0;
 
-  pthread_join(data.philos[0].thread, NULL);
-  pthread_join(data.philos[1].thread, NULL);
+  while (i < data.nb_philo)
+	{
+		 pthread_join(data.philos[i].thread, NULL);
+		i++;
+	}
+
+ 
+  
 
   pthread_mutex_destroy(&lock);
 

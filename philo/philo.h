@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/01 14:13:59 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/01 15:18:25 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 // } t_data;
 
 
-// int ft_atoi(const char *str);
+
 // int	ft_error(char *str);
 
 typedef struct s_philo
@@ -63,3 +63,6 @@ typedef struct s_data
 	t_philo *philos; 
 
 } t_data;
+
+
+int ft_atoi(const char *str);
