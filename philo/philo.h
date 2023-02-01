@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/01/31 16:23:42 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:13:59 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,49 @@
 # include <sys/time.h>
 # include <stdatomic.h>
 
-typedef pthread_mutex_t	t_mutex;
+// typedef pthread_mutex_t	t_mutex;
 
+
+// typedef struct s_philo
+// {
+// 	int id;
+// 	atomic_long last_eat;
+// 	pthread_t thread;
+// 	t_mutex	*left_fork;
+// 	t_mutex	*right_fork;
+// 	struct s_data *datas;
+	
+// } t_philo;
+
+
+// typedef struct s_data
+// {
+// 	int nb_philo;
+// 	t_philo *philos;
+// 	t_mutex *forks;
+// 	int t_die;
+// 	int t_eat;
+// 	int t_sleep;
+// 	int nb_meal;
+// 	long start_time;
+// 	int die;
+// } t_data;
+
+
+// int ft_atoi(const char *str);
+// int	ft_error(char *str);
 
 typedef struct s_philo
 {
 	int id;
-	atomic_long last_eat;
 	pthread_t thread;
-	t_mutex	*left_fork;
-	t_mutex	*right_fork;
-	struct s_data *datas;
 	
-} t_philo;
 
+} t_philo;
 
 typedef struct s_data
 {
 	int nb_philo;
-	t_philo *philos;
-	t_mutex *forks;
-	int t_die;
-	int t_eat;
-	int t_sleep;
-	int nb_meal;
-	long start_time;
-	int die;
+	t_philo *philos; 
+
 } t_data;
-
-
-
-
-
-
-
-
-int ft_atoi(const char *str);
-int	ft_error(char *str);
