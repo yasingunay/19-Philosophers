@@ -6,7 +6,7 @@
 #    By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 14:24:50 by ygunay            #+#    #+#              #
-#    Updated: 2023/01/31 16:33:55 by ygunay           ###   ########.fr        #
+#    Updated: 2023/02/02 10:09:25 by ygunay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS = main.c utils.c
 
 OBJS = ${SRCS:.c=.o}
 
-CC	= gcc 
+CC	= gcc -fsanitize=thread -g
 
 CFLAGS = -Wall -Wextra -Werror 
 

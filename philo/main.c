@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/01 15:33:20 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 10:38:04 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,31 +169,13 @@
 // 	free_threads(&data);
 // 	return (0);
 // }
-
-
-pthread_mutex_t lock;
-
-
-void *routine(void *arg) 
+void parse_args(t_data *data, int ac, char **av)
 {
-
-	t_philo *philo;
-	int i;
-	
-	i = 0;
-	philo = (t_philo *)arg;
-
-  while(i < 1)
-  {
-    pthread_mutex_lock(&lock);
-   printf("%d has taken a fork\n",philo->id);
-   sleep(3);
-    pthread_mutex_unlock(&lock);
-	i++;
-	
-  }
-  return NULL;
+	if (ac ==2)
+		data->nb_philo = ft_atoi(av[1]);
 }
+
+
 
 void init_philos(t_data *data)
 {
@@ -204,21 +186,63 @@ void init_philos(t_data *data)
 			printf("malloc error\n");
 			exit(1);
 		}
+
+	data->forks = malloc(data->nb_philo * sizeof(t_mutex));
+	if(!data->forks)
+		{
+			free(data->forks);
+			printf("malloc error\n");
+			exit(1);
+		}
 	int i = 0;
 	while (i < data->nb_philo)
 	{
 		data->philos[i].id = i+1;
+		data->philos[i].data = data;
+		
 		i++;
 	
 	}
 	
 }
 
-void parse_args(t_data *data, int ac, char **av)
+int counter = 0 ;
+
+static void routine(t_philo *philo) 
 {
-	if (ac ==2)
-		data->nb_philo = ft_atoi(av[1]);
+   pthread_mutex_lock(&philo->data->forks[philo->id]);
+	pthread_mutex_lock(&philo->data->forks[(philo->id +1 ) % philo->data->nb_philo]);
+   counter++;
+   printf("%d\n",counter);
+   sleep(1);
+	pthread_mutex_unlock(&philo->data->forks[philo->id]);
+	pthread_mutex_unlock(&philo->data->forks[(philo->id +1 ) % philo->data->nb_philo]);
+
 }
+
+void	*philo_life(void *arg)
+{
+	t_philo	*philo;
+
+	int i = 0;
+	philo = (t_philo *) arg;
+	if (philo->id % 2 == 0)
+		sleep(3);
+	while (i < 1)
+	{
+		routine(philo);
+		i++;
+	}
+		
+	return (NULL);
+}
+
+
+
+
+
+
+
 
 int main(int ac, char **av) 
 {
@@ -227,11 +251,19 @@ int main(int ac, char **av)
   parse_args(&data,ac,av);
 
   init_philos(&data);
-  pthread_mutex_init(&lock, NULL);
 
+  while (i < data.nb_philo)
+	{
+		 pthread_mutex_init(&data.forks[i] , NULL);
+		i++;
+	
+	}
+  
+
+	i = 0;
 	while (i < data.nb_philo)
 	{
-		 pthread_create(&data.philos[i].thread, NULL, routine, &data.philos[i]);
+		 pthread_create(&data.philos[i].thread, NULL, philo_life, &data.philos[i]);
 		i++;
 	
 	}
@@ -245,9 +277,14 @@ int main(int ac, char **av)
 	}
 
  
+  i = 0;
+  while (i < data.nb_philo)
+	{
+		 pthread_mutex_destroy(&data.forks[i]);
+		i++;
+	
+	}
   
-
-  pthread_mutex_destroy(&lock);
 
   free(data.philos);
   return 0;

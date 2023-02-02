@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/01 15:18:25 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 09:53:43 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <sys/time.h>
 # include <stdatomic.h>
 
-// typedef pthread_mutex_t	t_mutex;
+
 
 
 // typedef struct s_philo
@@ -49,10 +49,13 @@
 
 // int	ft_error(char *str);
 
+typedef pthread_mutex_t	t_mutex;
+
 typedef struct s_philo
 {
 	int id;
 	pthread_t thread;
+	struct s_data *data;
 	
 
 } t_philo;
@@ -61,6 +64,7 @@ typedef struct s_data
 {
 	int nb_philo;
 	t_philo *philos; 
+	t_mutex *forks;
 
 } t_data;
 
