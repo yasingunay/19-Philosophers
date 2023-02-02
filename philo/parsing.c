@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:21:50 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 15:36:17 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:45:27 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int ft_atoi(const char *str)
 
 void parse_args(t_data *data, int ac, char **av)
 {
-	if (ac == 2)
+	if (ac == 3)
 	{
 		data->nb_philo = ft_atoi(av[1]);
-		//data->t_die = ft_atoi(av[2]);
+		data->t_die = ft_atoi(av[2]);
 	}
 		
 }

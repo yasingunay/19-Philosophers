@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 15:18:12 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:35:22 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	launch_philos(t_data *data)
 	int	i;
 
 	i = 0;
+	data->start_time = get_time();
 	while (i < data->nb_philo)
 	{
 		 pthread_create(&data->philos[i].thread, NULL, philo_life, &data->philos[i]);
