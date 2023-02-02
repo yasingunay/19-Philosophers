@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 09:53:43 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 11:10:11 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_philo
 	int id;
 	pthread_t thread;
 	struct s_data *data;
+	t_mutex *left_fork;
+	t_mutex *right_fork;
 	
 
 } t_philo;

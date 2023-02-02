@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 10:38:04 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 13:41:46 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ void parse_args(t_data *data, int ac, char **av)
 
 void init_philos(t_data *data)
 {
+	int i;
+	
 	data->philos = malloc(data->nb_philo * sizeof(t_philo));
 	if(!data->philos)
 		{
@@ -194,15 +196,29 @@ void init_philos(t_data *data)
 			printf("malloc error\n");
 			exit(1);
 		}
-	int i = 0;
-	while (i < data->nb_philo)
+		i = 0;
+	 while (i < data->nb_philo)
 	{
-		data->philos[i].id = i+1;
-		data->philos[i].data = data;
-		
+		 pthread_mutex_init(&data->forks[i] , NULL);
 		i++;
 	
 	}
+	
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		data->philos[i].id = i+1;
+		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_fork = &data->forks[(i + data->nb_philo -1) % data->nb_philo];
+		
+		data->philos[i].data = data;
+		
+		
+		i++;
+
+	}
+
+	
 	
 }
 
@@ -210,13 +226,13 @@ int counter = 0 ;
 
 static void routine(t_philo *philo) 
 {
-   pthread_mutex_lock(&philo->data->forks[philo->id]);
-	pthread_mutex_lock(&philo->data->forks[(philo->id +1 ) % philo->data->nb_philo]);
-   counter++;
-   printf("%d\n",counter);
+   pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
+   
+   printf("%d philo is eating\n",philo->id);
    sleep(1);
-	pthread_mutex_unlock(&philo->data->forks[philo->id]);
-	pthread_mutex_unlock(&philo->data->forks[(philo->id +1 ) % philo->data->nb_philo]);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
 
 }
 
@@ -227,7 +243,7 @@ void	*philo_life(void *arg)
 	int i = 0;
 	philo = (t_philo *) arg;
 	if (philo->id % 2 == 0)
-		sleep(3);
+		sleep(2);
 	while (i < 1)
 	{
 		routine(philo);
@@ -238,29 +254,18 @@ void	*philo_life(void *arg)
 }
 
 
-
-
-
-
-
-
 int main(int ac, char **av) 
 {
   t_data data;
   int i = 0;
   parse_args(&data,ac,av);
 
-  init_philos(&data);
-
-  while (i < data.nb_philo)
-	{
-		 pthread_mutex_init(&data.forks[i] , NULL);
-		i++;
-	
-	}
   
 
-	i = 0;
+ 
+	init_philos(&data);
+  
+	
 	while (i < data.nb_philo)
 	{
 		 pthread_create(&data.philos[i].thread, NULL, philo_life, &data.philos[i]);
@@ -269,7 +274,6 @@ int main(int ac, char **av)
 	}
  
   i = 0;
-
   while (i < data.nb_philo)
 	{
 		 pthread_join(data.philos[i].thread, NULL);
