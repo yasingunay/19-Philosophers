@@ -1,20 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 12:37:36 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 14:24:03 by ygunay           ###   ########.fr       */
+/*   Created: 2023/02/02 14:21:50 by ygunay            #+#    #+#             */
+/*   Updated: 2023/02/02 14:24:06 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_error(char *str)
+int ft_atoi(const char *str)
 {
-	printf("Error:\n%s\n", str);
-	return (-1);
+	int nbr;
+	int i;
+
+	nbr = 0;
+	i = 0;
+	
+	while(str[i])
+	{
+		if(str[i] < 48 || str[i] > 57)
+			return (-1);
+		i++;
+	}
+	i = 0;
+	while(str[i])
+	{
+		nbr = (nbr * 10) +str[i] - 48;
+		i++;
+	}
+	return(nbr);
 }
 
+void parse_args(t_data *data, int ac, char **av)
+{
+	if (ac ==2)
+		data->nb_philo = ft_atoi(av[1]);
+}

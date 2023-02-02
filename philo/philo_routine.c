@@ -1,0 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
+/*   Updated: 2023/02/02 14:43:30 by ygunay           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+void routine(t_philo *philo) 
+{
+   pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
+   
+   printf("%d philo is eating\n",philo->id);
+   sleep(1);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+
+}
+
+void	*philo_life(void *arg)
+{
+	t_philo	*philo;
+
+	int i = 0;
+	philo = (t_philo *) arg;
+	if (philo->id % 2 == 0)
+		sleep(2);
+	while (i < 1)
+	{
+		routine(philo);
+		i++;
+	}
+		
+	return (NULL);
+}

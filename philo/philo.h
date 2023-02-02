@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 11:10:11 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/02 14:43:41 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,10 @@ typedef struct s_data
 
 
 int ft_atoi(const char *str);
+void parse_args(t_data *data, int ac, char **av);
+void routine(t_philo *philo) ;
+void	*philo_life(void *arg);
+void init_mutexes(t_data *data);
+void init_philos(t_data *data);
+void	launch_philos(t_data *data);
+void ft_free(t_data *data);
