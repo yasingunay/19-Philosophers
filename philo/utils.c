@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 12:37:36 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 14:24:03 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 14:59:51 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,11 @@ int	ft_error(char *str)
 	return (-1);
 }
 
+long	get_time(void)
+{
+	struct timeval		tv;
+
+	gettimeofday(&tv, NULL);
+	
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}

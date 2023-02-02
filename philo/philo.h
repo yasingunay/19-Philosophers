@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 14:43:41 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:31:05 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 // 	int nb_philo;
 // 	t_philo *philos;
 // 	t_mutex *forks;
-// 	int t_die;
+// 	
 // 	int t_eat;
 // 	int t_sleep;
 // 	int nb_meal;
@@ -58,6 +58,7 @@ typedef struct s_philo
 	struct s_data *data;
 	t_mutex *left_fork;
 	t_mutex *right_fork;
+	int last_eat;
 	
 
 } t_philo;
@@ -65,8 +66,11 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int nb_philo;
+	int t_die;
 	t_philo *philos; 
 	t_mutex *forks;
+	int die;
+	t_mutex *death;
 
 } t_data;
 
@@ -79,3 +83,4 @@ void init_mutexes(t_data *data);
 void init_philos(t_data *data);
 void	launch_philos(t_data *data);
 void ft_free(t_data *data);
+long	get_time(void);

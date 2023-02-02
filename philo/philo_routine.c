@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 14:43:30 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:35:46 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void routine(t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
    
    printf("%d philo is eating\n",philo->id);
+   philo->last_eat = get_time();
    sleep(1);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -27,8 +28,10 @@ void routine(t_philo *philo)
 void	*philo_life(void *arg)
 {
 	t_philo	*philo;
+	int i;
 
-	int i = 0;
+	i = 0;
+	
 	philo = (t_philo *) arg;
 	if (philo->id % 2 == 0)
 		sleep(2);
@@ -36,6 +39,7 @@ void	*philo_life(void *arg)
 	{
 		routine(philo);
 		i++;
+		
 	}
 		
 	return (NULL);
