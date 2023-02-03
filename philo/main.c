@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/03 10:03:36 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/03 11:30:34 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int main(int ac, char **av)
 {
   t_data data;
 
-  parse_args(&data,ac,av);
-  init_mutexes(&data);
-  init_philos(&data);
-  launch_philos(&data);
-  ft_free(&data);
-	
+  if (ac < 5 || ac > 6)
+	return(ft_error("Argument number is not correct"));
+  if(parse_args(&data,ac,av) == -1)
+	return(ft_error("At least one argumet is invalid"));
+  if(init_and_launch(&data) == -1)
+	return(ft_error("Memory allocation failed"));
   return 0;
 }

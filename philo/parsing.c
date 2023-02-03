@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:21:50 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/03 10:17:54 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/03 11:07:32 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,20 @@ int ft_atoi(const char *str)
 	return(nbr);
 }
 
-void parse_args(t_data *data, int ac, char **av)
+int parse_args(t_data *data, int ac, char **av)
 {
-	if (ac == 2)
-	{
-		data->nb_philo = ft_atoi(av[1]);
-		//data->t_die = ft_atoi(av[2]);
-	}
-	else
-	{
-		printf("error\n");
-		return;
-	}
-		
+	
+	data->nb_philo = ft_atoi(av[1]);
+	data->t_die = ft_atoi(av[2]);
+	data->t_eat = ft_atoi(av[3]);
+	data->t_sleep = ft_atoi(av[4]);
+	if(ac == 6)
+		data->nb_meal = ft_atoi(av[5]);
+	if(data->nb_philo < 1 || data->t_die < 1 || data->t_eat < 1 || data->t_sleep < 1)
+		return(-1);
+	if(ac == 6 && data->nb_meal < 1)
+		return(-1);
+
+	return(0);
 		
 }

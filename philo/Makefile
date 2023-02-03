@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+         #
+#    By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 14:24:50 by ygunay            #+#    #+#              #
-#    Updated: 2023/02/02 16:54:32 by yasingunay       ###   ########.fr        #
+#    Updated: 2023/02/03 10:48:54 by ygunay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+NAME = philo
 
 SRCS = main.c utils.c parsing.c philo_routine.c  init.c
 
@@ -18,7 +20,6 @@ CC	= gcc -fsanitize=thread -g
 
 CFLAGS = -Wall -Wextra -Werror 
 
-NAME = philo
 
 ${NAME} : ${OBJS}
 				${CC} ${CFLAGS} -o ${NAME} ${OBJS}
