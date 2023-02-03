@@ -6,7 +6,7 @@
 /*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 16:35:22 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/03 10:29:51 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ void init_philos(t_data *data)
 	while (i < data->nb_philo)
 	{
 		data->philos[i].id = i+1;
-		data->philos[i].left_fork = &data->forks[i];
-		data->philos[i].right_fork = &data->forks[(i + data->nb_philo -1) % data->nb_philo];
+		data->philos[i].left_fork = &data->forks[i];  
+		if (i == 0)
+			data->philos[i].right_fork = &data->forks[(data->nb_philo -1) % data->nb_philo];
+		else
+			data->philos[i].right_fork = &data->forks[i -1];
 		data->philos[i].data = data;
 		i++;
 
@@ -68,7 +71,7 @@ void	launch_philos(t_data *data)
 	data->start_time = get_time();
 	while (i < data->nb_philo)
 	{
-		 pthread_create(&data->philos[i].thread, NULL, philo_life, &data->philos[i]);
+		pthread_create(&data->philos[i].thread, NULL, philo_life, &data->philos[i]);
 		i++;
 	
 	}
@@ -95,6 +98,6 @@ void ft_free(t_data *data)
 	
 	}
 	free(data->philos);
-	free(data->philos);
+	free(data->forks);
 	
 }

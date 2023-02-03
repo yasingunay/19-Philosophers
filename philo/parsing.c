@@ -6,7 +6,7 @@
 /*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:21:50 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 16:45:27 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/03 10:17:54 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,16 @@ int ft_atoi(const char *str)
 
 void parse_args(t_data *data, int ac, char **av)
 {
-	if (ac == 3)
+	if (ac == 2)
 	{
 		data->nb_philo = ft_atoi(av[1]);
-		data->t_die = ft_atoi(av[2]);
+		//data->t_die = ft_atoi(av[2]);
 	}
+	else
+	{
+		printf("error\n");
+		return;
+	}
+		
 		
 }

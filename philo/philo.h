@@ -6,7 +6,7 @@
 /*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/02 16:34:42 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/03 10:15:51 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_philo
 	struct s_data *data;
 	t_mutex *left_fork;
 	t_mutex *right_fork;
-	int last_eat;
+	long int last_eat;
 	
 
 } t_philo;
@@ -70,8 +70,8 @@ typedef struct s_data
 	t_philo *philos; 
 	t_mutex *forks;
 	int die;
-	t_mutex *death;
-	int start_time;
+
+	long int start_time;
 
 } t_data;
 
