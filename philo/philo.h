@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 14:00:15 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 15:51:04 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ typedef struct s_data
 	int t_sleep;
 	int must_eat;
 	int died_philo;
-	t_mutex *log;
-	t_mutex *death;
+	pthread_t	th_monitor;
 	
 	long int start_time;
 
@@ -64,6 +63,6 @@ int ft_free(t_data *data);
 long	get_time(void);
 int	ft_error(char *str);
 int init_and_launch (t_data	*data);
-void	ft_usleep(t_data *data, int time);
-void print_philo_log(t_philo *philo,t_mutex *mutex, char *str);
-void	ft_check_death(t_data *data);
+void	ft_usleep(int time);
+void print_philo_log(t_philo *philo, char *str);
+void	*thread_monitor(void *arg);

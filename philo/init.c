@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 14:15:43 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 15:58:58 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ int ft_free(t_data *data)
 	
 		}
 	}
-	pthread_mutex_destroy(data->log) ;
-	pthread_mutex_destroy(data->death);
+
 	free(data->philos);
 	free(data->forks);
-	free(data->log);
-	free(data->death);
+	
 	return (-1);
 }
 
@@ -49,10 +47,6 @@ int  init_mutexes(t_data *data)
 		i++;
 	
 	}
-	if (pthread_mutex_init(data->log, NULL) != 0)
-		return (-1);
-	if (pthread_mutex_init(data->death, NULL) != 0)
-		return (-1);
 	return (0);
 }
 
@@ -85,16 +79,16 @@ void	launch_philos(t_data *data)
 
 	i = 0;
 	data->start_time = get_time();
+	pthread_create(&data->th_monitor, NULL, &thread_monitor, data);
 	while (i < data->nb_philo)
 	{
 		pthread_create(&data->philos[i].thread, NULL, (void *)philo_life, &data->philos[i]);
 		i++;
 	
 	}
-
-	ft_check_death(data);
 	
-  i = 0;
+  pthread_join(data->th_monitor, NULL);
+ i = 0;
   while (i < data->nb_philo)
 	{
 		 pthread_join(data->philos[i].thread, NULL);
@@ -108,9 +102,8 @@ int init_and_launch (t_data	*data)
 {
 	data->philos = malloc(data->nb_philo * sizeof(t_philo));
 	data->forks = malloc(data->nb_philo  * sizeof(t_mutex));
-	data->log = malloc(sizeof(t_mutex));
-	data->death = malloc(sizeof(t_mutex));
-	if( !data->philos || !data->forks || !data->log || !data->death) 
+	
+	if( !data->philos || !data->forks ) 
 		return (ft_free(data));
 	if(init_mutexes(data) == -1)
 		return (ft_free(data));
