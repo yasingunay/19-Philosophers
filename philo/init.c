@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/03 11:27:35 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 10:12:14 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void init_philos(t_data *data)
 		else
 			data->philos[i].right_fork = &data->forks[i -1];
 		data->philos[i].data = data;
+		data->philos[i].log = &data->forks[data->nb_philo];
 		i++;
 
 	}
@@ -97,7 +98,7 @@ void	launch_philos(t_data *data)
 int init_and_launch (t_data	*data)
 {
 	data->philos = malloc(data->nb_philo * sizeof(t_philo));
-	data->forks = malloc(data->nb_philo * sizeof(t_mutex));
+	data->forks = malloc((data->nb_philo + 1) * sizeof(t_mutex));
 	if( !data->philos || !data->forks)
 		return (ft_free(data));
 	if(init_mutexes(data) == -1)

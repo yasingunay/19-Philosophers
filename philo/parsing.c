@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:21:50 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/03 11:07:32 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 10:59:09 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int parse_args(t_data *data, int ac, char **av)
 	data->t_eat = ft_atoi(av[3]);
 	data->t_sleep = ft_atoi(av[4]);
 	if(ac == 6)
-		data->nb_meal = ft_atoi(av[5]);
+		data->must_eat = ft_atoi(av[5]);
 	if(data->nb_philo < 1 || data->t_die < 1 || data->t_eat < 1 || data->t_sleep < 1)
 		return(-1);
-	if(ac == 6 && data->nb_meal < 1)
+	if(ac == 6 && data->must_eat < 1)
 		return(-1);
 
 	return(0);
