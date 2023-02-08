@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 10:57:59 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:00:15 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <string.h>
 # include <sys/time.h>
 # include <stdatomic.h>
+
 
 
 typedef pthread_mutex_t	t_mutex;
@@ -27,7 +29,6 @@ typedef struct s_philo
 	struct s_data *data;
 	t_mutex *left_fork;
 	t_mutex *right_fork;
-	t_mutex *log;
 	long int last_eat;
 	int meal_count;
 	
@@ -44,7 +45,9 @@ typedef struct s_data
 	int t_sleep;
 	int must_eat;
 	int died_philo;
-
+	t_mutex *log;
+	t_mutex *death;
+	
 	long int start_time;
 
 } t_data;
@@ -53,7 +56,7 @@ typedef struct s_data
 int ft_atoi(const char *str);
 int parse_args(t_data *data, int ac, char **av);
 void routine(t_philo *philo) ;
-void	*philo_life(void *arg);
+int	philo_life(t_philo	*philo);
 int  init_mutexes(t_data *data);
 void init_philos(t_data *data);
 void	launch_philos(t_data *data);
@@ -61,5 +64,6 @@ int ft_free(t_data *data);
 long	get_time(void);
 int	ft_error(char *str);
 int init_and_launch (t_data	*data);
-void	ft_usleep(int time);
-void print_philo_log(t_philo *philo, char *str);
+void	ft_usleep(t_data *data, int time);
+void print_philo_log(t_philo *philo,t_mutex *mutex, char *str);
+void	ft_check_death(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/03 11:30:34 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:10:22 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int main(int ac, char **av)
 	return(ft_error("At least one argumet is invalid"));
   if(init_and_launch(&data) == -1)
 	return(ft_error("Memory allocation failed"));
+
   return 0;
 }

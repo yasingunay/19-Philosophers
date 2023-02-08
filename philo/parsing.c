@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:21:50 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 10:59:09 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/08 14:05:06 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int ft_atoi(const char *str)
 
 int parse_args(t_data *data, int ac, char **av)
 {
-	
+	memset(data, 0, sizeof(t_data));
 	data->nb_philo = ft_atoi(av[1]);
 	data->t_die = ft_atoi(av[2]);
 	data->t_eat = ft_atoi(av[3]);
