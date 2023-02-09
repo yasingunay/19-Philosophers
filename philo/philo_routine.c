@@ -6,46 +6,45 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 14:27:52 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 15:41:20 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void routine(t_philo *philo) 
+static void routine(t_philo *philo) 
 {
-	while(philo->data->died_philo == 0)
+	
+	pthread_mutex_lock(philo->left_fork);
+	print_philo_log(philo, 0);
+	if (philo->data->died_philo == 1)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		print_philo_log(philo, "has taken a fork\n");
-		if (philo->data->died_philo == 1)
-		{
-			ft_usleep(philo->data->t_die * 2);
-			return ;
-		}
-		pthread_mutex_lock(philo->right_fork);
-		print_philo_log(philo,"has taken a fork\n");
-		print_philo_log(philo,"is eating\n");
-		philo->last_eat = get_time();
-		ft_usleep(philo->data->t_eat);
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-		//philo->meal_count += 1;
-		print_philo_log(philo, "is sleeping\n");
-		ft_usleep(philo->data->t_sleep);
-		print_philo_log(philo, "is thinking\n");
+		ft_usleep(philo->data->t_die * 2);
+		return ;
 	}
-	return ;
-   	
+	pthread_mutex_lock(philo->right_fork);
+	print_philo_log(philo, 0);
+	print_philo_log(philo, 1);
+	philo->last_eat = get_time();
+	ft_usleep(philo->data->t_eat);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	philo->last_eat += 1;
+	print_philo_log(philo, 2);
+	ft_usleep(philo->data->t_sleep);
+	print_philo_log(philo, 3);
+	
 	
 }
 
-int	philo_life(t_philo	*philo)
+void	*philo_life(void *arg)
 {
+	t_philo	*philo;
 
+	philo = (t_philo *) arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->t_eat / 2);
-	if(philo->data->died_philo == 0)
+	while(!philo->data->died_philo)
 		routine(philo);
-	return (1);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 13:57:41 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 16:38:38 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ typedef pthread_mutex_t	t_mutex;
 typedef struct s_philo
 {
 	int id;
-	pthread_t thread;
+	pthread_t *thread;
 	struct s_data *data;
 	t_mutex *left_fork;
 	t_mutex *right_fork;
-	t_mutex print;
-	long int last_eat;
+	t_mutex	*print;
+	int last_eat;
 	int meal_count;
+
 	
 
 } t_philo;
@@ -41,6 +42,7 @@ typedef struct s_data
 	int nb_philo;
 	int t_die;
 	t_philo *philos; 
+	
 	t_mutex *forks;
 	t_mutex mutex;
 	int t_eat;
@@ -48,23 +50,26 @@ typedef struct s_data
 	int must_eat;
 	int died_philo;
 	pthread_t	th_monitor;
+	pthread_t		*threads;
 	
-	long int start_time;
+	int start_time;
 
 } t_data;
 
-
+void print_philo_log(t_philo *philo, int action);
+static int	check_death_thread(t_philo *philo);
+void	*death_thread(void *arg);
 int ft_atoi(const char *str);
 int parse_args(t_data *data, int ac, char **av);
-void routine(t_philo *philo) ;
-int	philo_life(t_philo	*philo);
+static void routine(t_philo *philo);
+void	*philo_life(void *arg);
 int  init_mutexes(t_data *data);
 void init_philos(t_data *data);
-void	launch_philos(t_data *data);
+static void	launch_philos(t_data *data);
 int ft_free(t_data *data);
-long	get_time(void);
+int	get_time(void);
 int	ft_error(char *str);
 int init_and_launch (t_data	*data);
 void	ft_usleep(int time);
-void print_philo_log(t_philo *philo, char *str);
-void	*thread_monitor(void *arg);
+
+
