@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 18:05:41 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:52:15 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,10 @@ void init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].thread = &data->threads[i];
 		data->philos[i].left_fork = &data->forks[i];  
-		data->philos[i].left_fork = &data->forks[i];
-		data->philos[i].right_fork = &data->forks[(i + 1) % data->nb_philo];	
-		
-		// if (i == 0)
-		// 	data->philos[i].right_fork = &data->forks[(data->nb_philo -1) % data->nb_philo];
-		// else
-		// 	data->philos[i].right_fork = &data->forks[i -1];
+		if (i == 0)
+			data->philos[i].right_fork = &data->forks[(data->nb_philo -1) % data->nb_philo];
+		else
+			data->philos[i].right_fork = &data->forks[i -1];
 		data->philos[i].print = &data->forks[data->nb_philo];
 		data->philos[i].meal_count = 0;
 		data->philos[i].data = data;

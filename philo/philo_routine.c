@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 18:14:25 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:37:35 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@ static void routine(t_philo *philo)
 {
 	
 	pthread_mutex_lock(philo->left_fork);
-	
 	print_philo_log(philo, 0);
 	
-	if (philo->data->died_philo == 1)
+	if (philo->data->nb_philo == 1)
 	{
 		ft_usleep(philo->data->t_die * 2);
 		return ;
 	}
-	
 	pthread_mutex_lock(philo->right_fork);
 	print_philo_log(philo, 0);
 	print_philo_log(philo, 1);

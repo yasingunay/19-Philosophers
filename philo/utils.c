@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 18:15:05 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:30:33 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void print_philo_log(t_philo *philo, int action)
 
 static int	check_death_thread(t_philo *philo)
 {
-	//write(2,"e",1);
 	if (get_time() - philo->last_eat >= philo->data->t_die)
 	{
 		print_philo_log(philo, 4);
@@ -103,10 +102,7 @@ void	*death_thread(void *arg)
 		{
 			ret = check_death_thread(&philos[i]);
 			if (ret == 0)
-				{
-					
 					return (NULL);
-				}
 				
 			if (ret == 1)
 				nb_done++;
