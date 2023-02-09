@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 16:57:12 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 17:31:19 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ typedef struct s_data
 } t_data;
 
 void print_philo_log(t_philo *philo, int action);
-int	check_death_thread(t_philo *philo);
+//int	check_death_thread(t_philo *philo);
 void	*death_thread(void *arg);
 int ft_atoi(const char *str);
 int parse_args(t_data *data, int ac, char **av);
-void routine(t_philo *philo);
+//void routine(t_philo *philo);
 void	*philo_life(void *arg);
 int  init_mutexes(t_data *data);
 void init_philos(t_data *data);

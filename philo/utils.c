@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 16:58:31 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:15:05 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,16 @@ void print_philo_log(t_philo *philo, int action)
 }
 
 
-int	check_death_thread(t_philo *philo)
+static int	check_death_thread(t_philo *philo)
 {
+	//write(2,"e",1);
 	if (get_time() - philo->last_eat >= philo->data->t_die)
 	{
 		print_philo_log(philo, 4);
 		philo->data->died_philo = 1;
 		return (0);
 	}
-	if (philo->last_eat >= philo->data->must_eat
+	if (philo->meal_count>= philo->data->must_eat
 		&& philo->data->must_eat != -1)
 		return (1);
 	return (2);
@@ -86,11 +87,12 @@ int	check_death_thread(t_philo *philo)
 
 void	*death_thread(void *arg)
 {
-	t_philo	*philos;
+	t_philo *philos;
 	int		i;
 	int		nb_done;
 	int		ret;
 
+	
 	philos = (t_philo *) arg;
 	nb_done = 0;
 	while (nb_done != philos[0].data->nb_philo)
@@ -101,12 +103,16 @@ void	*death_thread(void *arg)
 		{
 			ret = check_death_thread(&philos[i]);
 			if (ret == 0)
-				return (NULL);
+				{
+					
+					return (NULL);
+				}
+				
 			if (ret == 1)
 				nb_done++;
 			i++;
 		}
 	}
-	philos[0].data->died_philo = 1;
+	philos[0].data->died_philo =1;
 	return (NULL);
 }

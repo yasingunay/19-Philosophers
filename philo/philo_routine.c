@@ -6,22 +6,25 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 16:58:53 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:14:25 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void routine(t_philo *philo) 
+static void routine(t_philo *philo) 
 {
 	
 	pthread_mutex_lock(philo->left_fork);
+	
 	print_philo_log(philo, 0);
+	
 	if (philo->data->died_philo == 1)
 	{
 		ft_usleep(philo->data->t_die * 2);
 		return ;
 	}
+	
 	pthread_mutex_lock(philo->right_fork);
 	print_philo_log(philo, 0);
 	print_philo_log(philo, 1);
@@ -29,11 +32,10 @@ void routine(t_philo *philo)
 	ft_usleep(philo->data->t_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
-	philo->last_eat += 1;
+	philo->meal_count += 1;
 	print_philo_log(philo, 2);
 	ft_usleep(philo->data->t_sleep);
 	print_philo_log(philo, 3);
-	
 	
 }
 

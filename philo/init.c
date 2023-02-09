@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 17:03:41 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:05:41 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,10 @@ void	launch_philos(t_data *data)
 		data->philos[i].last_eat = data->start_time;
 		pthread_create(data->philos[i].thread, NULL, philo_life, &(data->philos[i]));
 		i++;
-	
 	}
-	pthread_create(&data->threads[data->nb_philo], NULL, &death_thread, data->philos);
+
+	pthread_create(&data->threads[data->nb_philo], NULL, death_thread, data->philos);
+	
 	
   	pthread_join(data->threads[data->nb_philo], NULL);
  	i = 0;
