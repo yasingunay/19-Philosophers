@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 18:30:33 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 18:55:05 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ static int	check_death_thread(t_philo *philo)
 
 void	*death_thread(void *arg)
 {
-	t_philo *philos;
+	t_philo *philo;
 	int		i;
 	int		nb_done;
 	int		ret;
 
 	
-	philos = (t_philo *) arg;
+	philo = (t_philo *) arg;
 	nb_done = 0;
-	while (nb_done != philos[0].data->nb_philo)
+	while (nb_done != philo->data->nb_philo)
 	{
 		i = 0;
 		nb_done = 0;
-		while (i < philos[0].data->nb_philo)
+		while (i < philo->data->nb_philo)
 		{
-			ret = check_death_thread(&philos[i]);
+			ret = check_death_thread(&philo[i]);
 			if (ret == 0)
 					return (NULL);
 				
@@ -109,6 +109,6 @@ void	*death_thread(void *arg)
 			i++;
 		}
 	}
-	philos[0].data->died_philo =1;
+	philo->data->died_philo =1;
 	return (NULL);
 }
