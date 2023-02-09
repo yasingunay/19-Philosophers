@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 15:55:13 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 14:25:18 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ void print_philo_log(t_philo *philo, char *str)
 {
 	long time;
 
+	
 	time = get_time() - philo->data->start_time;
-	if (philo->data->died_philo == 0)
-		printf("%ld %d %s", time, philo->id, str);
+	printf("%ld %d %s", time, philo->id, str);
+	
+	
 	
 }
 
@@ -90,7 +92,6 @@ void print_philo_log(t_philo *philo, char *str)
 void	*thread_monitor(void *arg)
 {
 	int		row;
-	
 	t_data	*data;
 
 	data = (t_data *)arg;
@@ -101,13 +102,14 @@ void	*thread_monitor(void *arg)
 		
 		while (row < data->nb_philo)
 		{
-			
+				
 				if (get_time() - data->philos[row].last_eat >= data->t_die)
 				{
-					printf("died\n");
 					data->died_philo = 1;
+					print_philo_log(&data->philos[row], "died\n");
 					return ((void *)0);
 				}
+				
 	
 			row++;
 		}

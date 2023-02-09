@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 15:57:41 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 14:27:52 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void routine(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_philo_log(philo, "has taken a fork\n");
+		if (philo->data->died_philo == 1)
+		{
+			ft_usleep(philo->data->t_die * 2);
+			return ;
+		}
 		pthread_mutex_lock(philo->right_fork);
 		print_philo_log(philo,"has taken a fork\n");
 		print_philo_log(philo,"is eating\n");

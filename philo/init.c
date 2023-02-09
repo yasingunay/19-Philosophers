@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 15:58:58 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 14:00:35 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ int ft_free(t_data *data)
 	i = 0;
 	if(data->forks)
 	{
-		 while (i < data->nb_philo)
+		 while (i < data->nb_philo )
 		{
 			 pthread_mutex_destroy(&data->forks[i]);
+			 pthread_mutex_destroy(&data->philos[i].print);
 			i++;
 	
 		}
 	}
-
+	pthread_mutex_destroy(&data->mutex);
 	free(data->philos);
 	free(data->forks);
 	
@@ -44,9 +45,14 @@ int  init_mutexes(t_data *data)
 	{
 		if( pthread_mutex_init(&data->forks[i] , NULL) != 0)
 			return (-1);
+		if( pthread_mutex_init(&data->philos[i].print , NULL) != 0)
+			return (-1);
+			
 		i++;
 	
 	}
+	pthread_mutex_init(&data->mutex, NULL) ;
+	
 	return (0);
 }
 
@@ -87,13 +93,7 @@ void	launch_philos(t_data *data)
 	
 	}
 	
-  pthread_join(data->th_monitor, NULL);
- i = 0;
-  while (i < data->nb_philo)
-	{
-		 pthread_join(data->philos[i].thread, NULL);
-		i++;
-	}
+  
 
 }
 
@@ -109,7 +109,7 @@ int init_and_launch (t_data	*data)
 		return (ft_free(data));
 	init_philos(data);
 	launch_philos(data);
-	ft_free(data);
+	
 		
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/08 15:51:04 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 13:57:41 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	struct s_data *data;
 	t_mutex *left_fork;
 	t_mutex *right_fork;
+	t_mutex print;
 	long int last_eat;
 	int meal_count;
 	
@@ -41,6 +42,7 @@ typedef struct s_data
 	int t_die;
 	t_philo *philos; 
 	t_mutex *forks;
+	t_mutex mutex;
 	int t_eat;
 	int t_sleep;
 	int must_eat;
