@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 16:32:25 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/09 17:03:41 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int  init_mutexes(t_data *data)
 		i++;
 	
 	}
-	pthread_mutex_init(&data->mutex, NULL) ;
+
 	
 	return (0);
 }
@@ -62,12 +62,15 @@ void init_philos(t_data *data)
 	while (i < data->nb_philo)
 	{
 		data->philos[i].id = i + 1;
-		data->philos[i].thread = data->threads[i];
+		data->philos[i].thread = &data->threads[i];
 		data->philos[i].left_fork = &data->forks[i];  
-		if (i == 0)
-			data->philos[i].right_fork = &data->forks[(data->nb_philo -1) % data->nb_philo];
-		else
-			data->philos[i].right_fork = &data->forks[i -1];
+		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_fork = &data->forks[(i + 1) % data->nb_philo];	
+		
+		// if (i == 0)
+		// 	data->philos[i].right_fork = &data->forks[(data->nb_philo -1) % data->nb_philo];
+		// else
+		// 	data->philos[i].right_fork = &data->forks[i -1];
 		data->philos[i].print = &data->forks[data->nb_philo];
 		data->philos[i].meal_count = 0;
 		data->philos[i].data = data;
@@ -78,7 +81,7 @@ void init_philos(t_data *data)
 }
 
 
-static void	launch_philos(t_data *data)
+void	launch_philos(t_data *data)
 {
 	int	i;
 
@@ -87,7 +90,7 @@ static void	launch_philos(t_data *data)
 	while (i < data->nb_philo)
 	{
 		data->philos[i].last_eat = data->start_time;
-		pthread_create(&data->philos[i].thread, NULL, philo_life, &(data->philos[i]));
+		pthread_create(data->philos[i].thread, NULL, philo_life, &(data->philos[i]));
 		i++;
 	
 	}
