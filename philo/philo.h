@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:36:10 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 17:31:19 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/10 09:39:55 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ typedef struct s_philo
 	t_mutex *left_fork;
 	t_mutex *right_fork;
 	t_mutex	*print;
-	int last_eat;
-	int meal_count;
+	atomic_int last_eat;
+	atomic_int meal_count;
 
 } t_philo;
 
 typedef struct s_data
 {
-	int start_time;
+	atomic_int start_time;
 	int nb_philo;
 	int t_die;
 	t_philo *philos; 
@@ -45,7 +45,7 @@ typedef struct s_data
 	int t_eat;
 	int t_sleep;
 	int must_eat;
-	int died_philo;
+	atomic_int died_philo;
 	pthread_t		*threads;
 	
 
@@ -62,7 +62,7 @@ int  init_mutexes(t_data *data);
 void init_philos(t_data *data);
 void	launch_philos(t_data *data);
 int ft_free(t_data *data);
-int	get_time(void);
+atomic_int	get_time(void);
 int	ft_error(char *str);
 int init_and_launch (t_data	*data);
 void	ft_usleep(int time);

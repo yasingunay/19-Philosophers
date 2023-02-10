@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 18:55:05 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/10 09:40:15 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void ft_usleep(int time)
 {
-	int	start;
+	atomic_int	start;
 
 	start = get_time();
 	while (get_time() - start < time)
@@ -31,7 +31,7 @@ int	ft_error(char *str)
 }
 
 
-int	get_time(void)
+atomic_int	get_time(void)
 {
 	struct timeval		tv;
 

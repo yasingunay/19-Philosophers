@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:53:57 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 16:30:03 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/10 09:49:53 by yasingunay       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int main(int ac, char **av)
 	return(ft_error("At least one argumet is invalid"));
   if(init_and_launch(&data) == -1)
 	return(ft_error("Memory allocation failed"));
+	system("leaks philo");
   return 0;
 }
