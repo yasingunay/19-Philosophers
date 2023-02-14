@@ -6,18 +6,16 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:25:20 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/09 18:37:35 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/14 14:38:47 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void routine(t_philo *philo) 
+static	void	routine(t_philo *philo)
 {
-	
 	pthread_mutex_lock(philo->left_fork);
 	print_philo_log(philo, 0);
-	
 	if (philo->data->nb_philo == 1)
 	{
 		ft_usleep(philo->data->t_die * 2);
@@ -34,7 +32,6 @@ static void routine(t_philo *philo)
 	print_philo_log(philo, 2);
 	ft_usleep(philo->data->t_sleep);
 	print_philo_log(philo, 3);
-	
 }
 
 void	*philo_life(void *arg)
@@ -44,7 +41,7 @@ void	*philo_life(void *arg)
 	philo = (t_philo *) arg;
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->t_eat / 2);
-	while(!philo->data->died_philo)
+	while (!philo->data->died_philo)
 		routine(philo);
 	return (NULL);
 }

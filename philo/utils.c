@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/10 09:40:15 by yasingunay       ###   ########.fr       */
+/*   Updated: 2023/02/14 14:42:00 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "philo.h"
 
-void ft_usleep(int time)
+void	ft_usleep(int time)
 {
 	atomic_int	start;
 
@@ -21,8 +21,6 @@ void ft_usleep(int time)
 	while (get_time() - start < time)
 		usleep(100);
 }
-
-
 
 int	ft_error(char *str)
 {
@@ -39,10 +37,7 @@ atomic_int	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-
-
-
-void print_philo_log(t_philo *philo, int action)
+void	print_philo_log(t_philo *philo, int action)
 {
 	int	time;
 
@@ -64,9 +59,6 @@ void print_philo_log(t_philo *philo, int action)
 	else if (action == 4)
 		printf("%d %d died\n", time, philo->id);
 	pthread_mutex_unlock(philo->print);
-	
-	
-	
 }
 
 
@@ -78,7 +70,7 @@ static int	check_death_thread(t_philo *philo)
 		philo->data->died_philo = 1;
 		return (0);
 	}
-	if (philo->meal_count>= philo->data->must_eat
+	if (philo->meal_count >= philo->data->must_eat
 		&& philo->data->must_eat != -1)
 		return (1);
 	return (2);
@@ -86,12 +78,11 @@ static int	check_death_thread(t_philo *philo)
 
 void	*death_thread(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 	int		i;
 	int		nb_done;
 	int		ret;
 
-	
 	philo = (t_philo *) arg;
 	nb_done = 0;
 	while (nb_done != philo->data->nb_philo)
@@ -102,13 +93,12 @@ void	*death_thread(void *arg)
 		{
 			ret = check_death_thread(&philo[i]);
 			if (ret == 0)
-					return (NULL);
-				
+				return (NULL);
 			if (ret == 1)
 				nb_done++;
 			i++;
 		}
 	}
-	philo->data->died_philo =1;
+	philo->data->died_philo = 1;
 	return (NULL);
 }

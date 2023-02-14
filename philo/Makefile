@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yasingunay <yasingunay@student.42.fr>      +#+  +:+       +#+         #
+#    By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 14:24:50 by ygunay            #+#    #+#              #
-#    Updated: 2023/02/10 09:46:33 by yasingunay       ###   ########.fr        #
+#    Updated: 2023/02/14 14:38:16 by ygunay           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS = main.c utils.c parsing.c philo_routine.c init.c
 
 OBJS = ${SRCS:.c=.o}
 
-CC = gcc -fsanitize=address -g
+CC = gcc 
 
 CFLAGS = -Wall -Wextra -Werror 
 
