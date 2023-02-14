@@ -6,7 +6,7 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 14:31:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/14 14:42:31 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/14 14:44:50 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	ft_free(t_data *data)
 	return (-1);
 }
 
-
 int	init_mutexes(t_data *data)
 {
 	int	i;
@@ -42,11 +41,9 @@ int	init_mutexes(t_data *data)
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 			return (-1);
 		i++;
-
 	}
 	return (0);
 }
-
 
 void	init_philos(t_data *data)
 {
@@ -67,11 +64,8 @@ void	init_philos(t_data *data)
 		data->philos[i].meal_count = 0;
 		data->philos[i].data = data;
 		i++;
-
 	}
-
 }
-
 
 void	launch_philos(t_data *data)
 {
@@ -86,7 +80,6 @@ void	launch_philos(t_data *data)
 			&(data->philos[i]));
 		i++;
 	}
-
 	pthread_create(&data->threads[data->nb_philo], NULL, death_thread,
 		data->philos);
 	pthread_join(data->threads[data->nb_philo], NULL);
@@ -97,7 +90,6 @@ void	launch_philos(t_data *data)
 		i++;
 	}
 }
-
 
 int	init_and_launch(t_data	*data)
 {

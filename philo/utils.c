@@ -6,10 +6,9 @@
 /*   By: ygunay <ygunay@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 15:20:02 by ygunay            #+#    #+#             */
-/*   Updated: 2023/02/14 14:42:00 by ygunay           ###   ########.fr       */
+/*   Updated: 2023/02/14 14:50:16 by ygunay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philo.h"
 
@@ -28,7 +27,6 @@ int	ft_error(char *str)
 	return (-1);
 }
 
-
 atomic_int	get_time(void)
 {
 	struct timeval		tv;
@@ -36,31 +34,6 @@ atomic_int	get_time(void)
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
-
-void	print_philo_log(t_philo *philo, int action)
-{
-	int	time;
-
-	time = get_time() - philo->data->start_time;
-	pthread_mutex_lock(philo->print);
-	if (philo->data->died_philo)
-	{
-		pthread_mutex_unlock(philo->print);
-		return ;
-	}
-	if (action == 0)
-		printf("%d %d has taken a fork\n", time, philo->id);
-	else if (action == 1)
-		printf("%d %d is eating\n", time, philo->id);
-	else if (action == 2)
-		printf("%d %d is sleeping\n", time, philo->id);
-	else if (action == 3)
-		printf("%d %d is thinking\n", time, philo->id);
-	else if (action == 4)
-		printf("%d %d died\n", time, philo->id);
-	pthread_mutex_unlock(philo->print);
-}
-
 
 static int	check_death_thread(t_philo *philo)
 {
